@@ -1,0 +1,36 @@
+go to prometheus.io & download tar.gz file of NodeExporter
+then 
+tar -xvf node_exporter-1.1.2.linux-amd64.tar.gz
+then cd node_exporter-1.1.2.linux-amd64
+
+cp node_exporter /usr/local/bin/node_exporter
+
+sudo vi /etc/systemd/system/node_exporter.service
+
+copy ""from here
+
+[unit]
+Description=Prometheus Node Exporter Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target      
+
+to here""
+
+systemctl daemon-reload
+sudo service node-exporter start
+sudo service node-exporter status
+
+- job_name: 'node-exporter'
+   static_configs:
+    - targets: ['localhost:9100']   
+
+    (we have to write in exact yaml)
+
+sudo service node-exporter restart
+sudo service node-exporter status

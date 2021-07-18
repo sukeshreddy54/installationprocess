@@ -1,0 +1,37 @@
+go to prometheus.io & download tar.gz file
+then 
+tar -xvf prometheus-2.181.linux-amd64.tar.gz
+then cd prometheus-2.181.linux-amd64
+if you execute ./prometheus then server will get start , but it will fail if it stops
+so,
+
+cp -r . /usr/local/bin/prometheus
+
+sudo vi /etc/systemd/system/prometheus.service
+
+copy ""from here
+
+[unit]
+Description=Prometheus Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/prometheus/prometheus --web.page-title=prometheus-demo --config.file=/usr/local/bin/prometheus/prometheus.yml
+
+[Install]
+WantedBy=multi-user.target      
+
+to here""
+
+
+sudo service prometheus start
+sudo service prometheus status
+
+sudo service prometheus stop
+sudo service prometheus status
+
+
+
+http://65.2.148.207:9090/metrics  to check metrics 
+        (publicip):9090
